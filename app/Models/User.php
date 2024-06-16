@@ -21,6 +21,13 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    public function videogames() {
+        return $this->hasMany(Videogame::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(comment::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
