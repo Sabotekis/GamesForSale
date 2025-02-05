@@ -6,16 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Videogame;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     public function index()
     {
         // Retrieve all customers and companies
-        $customers = User::where('type', 'customer')->get();
-        $companies = User::where('type', 'company')->get();
+        if (Auth::check() && Auth::user()->type === 'admin') {
+            $customers = User::where('type', 'customer')->get();
+            $companies = User::where('type', 'company')->get();
 
-        return view('admin.index', compact('customers', 'companies'));
+            return view('admin.index', compact('customers', 'companies'));
+        }
+        return redirect('/')->with('error', 'Access denied');
     }
 
     public function block(Request $request, $id)
@@ -46,5 +50,17 @@ class AdminController extends Controller
 
         // Redirect back with success message
         return back()->with('success', 'Comment deleted successfully.');
+    }
+
+    public function showVideogames()
+    {
+        $videogames = Videogame::all();
+        return view('admin.show_videogames', compact('videogames'));
+    }
+
+    public function showComments()
+    {
+        $comments = Comment::all();
+        return view('admin.show_comments', compact('comments'));
     }
 }

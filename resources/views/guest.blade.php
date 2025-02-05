@@ -1,19 +1,120 @@
-<!-- resources/views/guest.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form {
+    margin: 20px;
+}
+
+#profile, #search, #games {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+}
+
+#profile {
+    float: right;
+}
+
+#search {
+    float: left;
+}
+
+#games {
+    clear: both;
+    text-align: center;
+}
+
+#comments {
+    text-align: left;
+    margin: 20px;
+}
+
+.comment {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.comment form {
+    display: inline-block;
+}
+
+.comment button {
+    margin-left: 10px;
+}
+    </style>
 </head>
 <body>
-    <h1>List of Videogames</h1>
+    <h1>GamesForSale</h1>
     @if (Auth::check())
         <p>Welcome, {{ Auth::user()->name }}!</p>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit">Logout</button>
         </form>
+        @if(Auth::user()->type === 'admin')
+            <a href="{{ route('admin.index') }}">Admin Dashboard</a>
+            <a href="{{ route('admin.show_videogames') }}">Videogames</a>
+            <a href="{{ route('admin.show_comments') }}">Comments</a> 
+        @endif
     @else
         <a href="{{ route('login') }}">Login</a>
         <a href="{{ route('register') }}">Register</a>
@@ -33,8 +134,6 @@
         @foreach ($videogames as $videogame)
             <li>
                 <a href="{{ route('guest.show', ['videogameId' => $videogame->id]) }}">{{ $videogame->name }}</a>
-                <p>{{ $videogame->description }}</p>
-                <p>Price: ${{ $videogame->price }}</p>
             </li>
         @endforeach
     </ul>

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         
         $this->call(RoleSeeder::class);
 
-        $admin = User::create([
+        User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),

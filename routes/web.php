@@ -66,9 +66,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.index');
         Route::post('/block/{id}', [AdminController::class, 'block'])->name('admin.block');
         Route::delete('/destroy/videogame/{id}', [AdminController::class, 'destroyVideogame'])->name('admin.destroy_videogame');
-        Route::delete('/destroy/comment/{id}', [AdminController::class, 'destroyComment'])->name('admin.estroy_comment');
-        Route::get('/show-videogames', [AdminController::class, 'showVideogames'])->name('admin.show_videogames');
-        Route::get('/show-comments', [AdminController::class, 'showComments'])->name('admin.show_comments');
+        Route::delete('/destroy/comment/{id}', [AdminController::class, 'destroyComment'])->name('admin.destroy_comment');
+        Route::get('/show_videogames', [AdminController::class, 'showVideogames'])->name('admin.show_videogames');
+        Route::get('/show_comments', [AdminController::class, 'showComments'])->name('admin.show_comments');
     });
 });
 
